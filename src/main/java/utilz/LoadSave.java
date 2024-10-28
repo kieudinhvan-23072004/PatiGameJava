@@ -1,46 +1,49 @@
 package utilz;
 
-import userinterface.GamePanel;
-
-import javax.imageio.ImageIO;
-import java.awt.*;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+import javax.imageio.ImageIO;
+
+import userinterface.Game;
+
 public class LoadSave {
 
-    public static final String PLAYER_ATLAS = "data/player_sprites.png";
-    public static final String LEVEL_ATLAS = "data/outside_sprites.png";
-    public static final String LEVEL_ONE_DATA = "data/level_one_data.png";
-    public static final String GOKU_GONG = "data/goku_gong.png";
-    public static final String GOKU_JUMP = "data/goku_jump.png";
-    public static final String GOKU_KAME = "data/goku_kame.png";
-    public static final String GOKU_KAME2 = "data/goku_kame2.png";
-    public static final String GOKU_CHEM= "data/goku_chem.png";
+	public static final String PLAYER_ATLAS = "res/player_sprites.png";
+	public static final String LEVEL_ATLAS = "res/outside_sprites.png";
+	public static final String LEVEL_ONE_DATA = "res/level_one_data.png";
+	public static final String GOKU_CHEM = "res/chem.png";
+	public static final String GOKU_IDLE = "res/idle.png";
+	public static final String GOKU_RUN = "res/walk.png";
+	public static final String MENU_BUTTONS = "res/button_atlas.png";
+	public static final String MENU_BACKGROUND = "res/menu_background.png";
 
-    public static BufferedImage getSpriteAtlas(String fileName){
-        BufferedImage image = null;
-        try {
-            image = ImageIO.read(new File(fileName));
+	public static BufferedImage GetSpriteAtlas(String fileName) {
+		BufferedImage image = null;
+		try {
+			image = ImageIO.read(new File(fileName));
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return image;
-    }
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return image;
+	}
 
-    public static int[][] getLevelData(){
-        int[][] lvData = new int[GamePanel.maxScreenRow][GamePanel.maxScreenCol];
-        BufferedImage image = getSpriteAtlas(LEVEL_ONE_DATA);
-        for(int j = 0; j < image.getHeight(); j++){
-            for(int i = 0; i < image.getWidth(); i++){
-                Color color = new Color(image.getRGB(i, j));
-                int value = color.getRed();
-                if(value >= 48) value = 0;
-                lvData[j][i] = value;
-            }
-        }
-        return lvData;
-    }
+	public static int[][] GetLevelData() {
+		int[][] lvlData = new int[Game.TILES_IN_HEIGHT][Game.TILES_IN_WIDTH];
+		BufferedImage img = GetSpriteAtlas(LEVEL_ONE_DATA);
+
+		for (int j = 0; j < img.getHeight(); j++)
+			for (int i = 0; i < img.getWidth(); i++) {
+				Color color = new Color(img.getRGB(i, j));
+				int value = color.getRed();
+				if (value >= 48)
+					value = 0;
+				lvlData[j][i] = value;
+			}
+		return lvlData;
+
+	}
 }
